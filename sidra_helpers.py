@@ -42,7 +42,11 @@ def api_to_list(list: list[list]) -> list[list]:
     return out_list
 
 
-def make_excel(filename : str, list : list[list[dict]], headers : list) -> tuple[xlsxwriter.Workbook, xlsxwriter.Workbook.worksheet_class]:
+def make_excel(filename : str, list : list[list[dict]], headers : list, index_chart=False) -> tuple[xlsxwriter.Workbook, xlsxwriter.Workbook.worksheet_class]:
+
+    skipped_lines = 0
+    if index_chart == True:
+        skipped_lines = 4
 
     filename = filename + f" {datetime.date.today().isoformat()}.xlsx"
     
@@ -51,14 +55,14 @@ def make_excel(filename : str, list : list[list[dict]], headers : list) -> tuple
 
     # Writes headers
     for i in range(len(headers)):
-        worksheet.write(0, i, headers[i])
+        worksheet.write(0 + skipped_lines, i, headers[i])
 
     # Writes data
     for i in range(len(list)):
 
         for j in range(len(list[i])):
 
-            worksheet.write(1 + i, j, list[i][j])
+            worksheet.write(skipped_lines + 1 + i, j, list[i][j])
     
     return workbook, worksheet
 
