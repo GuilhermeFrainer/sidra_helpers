@@ -4,6 +4,7 @@ import xlsxwriter
 
 longest_series_size = 0
 date_format = None
+number_format = None
 
 
 def get_period(START_DATE : str) -> str:
@@ -47,7 +48,7 @@ def api_to_list(series_list: list[list]) -> list[list]:
 
 def make_excel(filename : str, series_list : list[list], headers : list, index_chart=False) -> tuple[xlsxwriter.Workbook, xlsxwriter.Workbook.worksheet_class]:
 
-    global date_format
+    global date_format, number_format
 
     skipped_lines = 0
     if index_chart == True:
@@ -58,6 +59,7 @@ def make_excel(filename : str, series_list : list[list], headers : list, index_c
     workbook = xlsxwriter.Workbook(filename)
     worksheet = workbook.add_worksheet('Dados')
     date_format = workbook.add_format({'num_format': 'mmm/yy'})
+    number_format = workbook.add_format({'num_format': '##0.0'})
 
     # Writes headers
     for i in range(len(headers)):
@@ -81,12 +83,11 @@ def make_excel(filename : str, series_list : list[list], headers : list, index_c
 # Used for index charts
 def write_index_formulas(workbook : xlsxwriter.Workbook, worksheet : xlsxwriter.Workbook.worksheet_class, headers):
 
-    global longest_series_size, date_format
+    global longest_series_size, date_format, number_format
     
     # Determines first column to be used for the corrected values
     first_column = len(headers) + 1
     merge_format = workbook.add_format({'align': 'center'})
-    number_format = workbook.add_format({'num_format': '##0.0'})
 
     if len(headers) - 1 > 1:
         worksheet.merge_range(0, first_column, 0, first_column, first_column + len(headers) - 1, 'Valores de correção', merge_format)
