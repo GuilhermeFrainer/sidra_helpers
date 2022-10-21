@@ -127,3 +127,12 @@ def write_index_formulas(workbook : xlsxwriter.Workbook, worksheet : xlsxwriter.
             correction_value = xlsxwriter.utility.xl_rowcol_to_cell(1, first_column + i - 1)
             worksheet.write_formula(5 + j, first_column + i - 1, f'{original_value}*100/{correction_value}')
 
+
+def make_credits(contents : list[str], workbook : xlsxwriter.Workbook):
+    
+    worksheet = workbook.add_worksheet('Informações')
+
+    for i in range(contents):
+
+        worksheet.write(i, 0, contents[i])
+
