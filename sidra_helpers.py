@@ -128,11 +128,16 @@ def write_index_formulas(workbook : xlsxwriter.Workbook, worksheet : xlsxwriter.
             worksheet.write_formula(5 + j, first_column + i - 1, f'{original_value}*100/{correction_value}')
 
 
+def get_series_size():
+    global longest_series_size
+    return longest_series_size
+
+
 def make_credits(contents : list[str], workbook : xlsxwriter.Workbook):
     
     worksheet = workbook.add_worksheet('Informações')
 
-    for i in range(contents):
+    for i in range(len(contents)):
 
         worksheet.write(i, 0, contents[i])
 
