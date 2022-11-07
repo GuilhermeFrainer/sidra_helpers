@@ -14,7 +14,7 @@ def get_period(START_DATE : str) -> str:
     return f"{start_date.year}{start_date.month:02d}-{today.year}{today.month:02d}"
 
 
-# Gets api data and returns it as a list of dicts
+# Gets api data and returns it as a list of lists
 def api_to_list(series_list: list[list]) -> list[list]:
 
     global longest_series_size
