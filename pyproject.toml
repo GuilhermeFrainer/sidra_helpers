@@ -18,5 +18,5 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = ""
-"Bug Tracker" = ""
+"Homepage" = "https://github.com/GuilhermeFrainer/sidra_helpers"
+"Bug Tracker" = "https://github.com/GuilhermeFrainer/sidra_helpers/issues"
