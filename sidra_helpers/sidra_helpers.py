@@ -8,7 +8,6 @@ number_format = None
 
 
 def get_period(START_DATE : str) -> str:
-    
     today = datetime.date.today()
     start_date = datetime.date.fromisoformat(START_DATE)
     return f"{start_date.year}{start_date.month:02d}-{today.year}{today.month:02d}"
@@ -16,7 +15,6 @@ def get_period(START_DATE : str) -> str:
 
 # Gets api data and returns it as a list of lists
 def api_to_list(series_list: list[list]) -> list[list]:
-
     global longest_series_size
     out_list = []
     longest_series_size = 0
@@ -47,7 +45,6 @@ def api_to_list(series_list: list[list]) -> list[list]:
 
 
 def make_excel(filename : str, series_list : list[list], headers : list, index_chart=False) -> tuple[xlsxwriter.Workbook, xlsxwriter.Workbook.worksheet_class]:
-
     global date_format, number_format
 
     skipped_lines = 0
@@ -67,9 +64,7 @@ def make_excel(filename : str, series_list : list[list], headers : list, index_c
 
     # Writes data
     for j in range(len(series_list)):
-
         for i in range(len(series_list[j])):
-
             # Writes dates
             if j == 0:
                 worksheet.write_datetime(skipped_lines + 1 + i, j, series_list[j][i], date_format)
@@ -81,8 +76,7 @@ def make_excel(filename : str, series_list : list[list], headers : list, index_c
 
 
 # Used for index charts
-def write_index_formulas(workbook : xlsxwriter.Workbook, worksheet : xlsxwriter.Workbook.worksheet_class, headers):
-
+def write_index_formulas(workbook : xlsxwriter.Workbook, worksheet : xlsxwriter.Workbook.worksheet_class, headers) -> None:
     global longest_series_size, date_format, number_format
     
     # Determines first column to be used for the corrected values
@@ -120,24 +114,19 @@ def write_index_formulas(workbook : xlsxwriter.Workbook, worksheet : xlsxwriter.
 
     # Writes corrected values
     for i in range(1, len(headers)):
-
         for j in range(longest_series_size):
-
             original_value = xlsxwriter.utility.xl_rowcol_to_cell(5 + j, i)
             correction_value = xlsxwriter.utility.xl_rowcol_to_cell(1, first_column + i - 1)
             worksheet.write_formula(5 + j, first_column + i - 1, f'{original_value}*100/{correction_value}')
 
 
-def get_series_size():
+def get_series_size() -> int:
     global longest_series_size
     return longest_series_size
 
 
-def make_credits(contents : list[str], workbook : xlsxwriter.Workbook):
-    
+def make_credits(contents : list[str], workbook : xlsxwriter.Workbook) -> None:
     worksheet = workbook.add_worksheet('Informações')
-
     for i in range(len(contents)):
-
         worksheet.write(i, 0, contents[i])
 
