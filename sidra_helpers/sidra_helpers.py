@@ -125,7 +125,7 @@ def get_series_size() -> int:
     return longest_series_size
 
 
-def make_credits(contents : list[str], workbook : xlsxwriter.Workbook) -> None:
+def make_credits(workbook : xlsxwriter.Workbook, contents : list[str]) -> None:
     worksheet = workbook.add_worksheet('Informações')
     for i in range(len(contents)):
         worksheet.write(i, 0, contents[i])
